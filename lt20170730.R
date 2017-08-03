@@ -12,7 +12,7 @@ file_name <- str_replace(file_name, "accelerometer/", "")
 # csvファイルを一括で読み込む -------
 ldata <- lapply(files, read_csv, locale = locale(encoding="cp932"), 
                 skip = 3, col_types = cols("時刻" = col_character()))
-
+#エラーになる場合は，「locale = locale(encoding="cp932"), 」を削除
 
 # ファイル名から日付とIDを取得 -------
 for(i in 1:length(file_name)) {
