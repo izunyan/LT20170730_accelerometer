@@ -11,7 +11,8 @@ file_name <- str_replace(file_name, "accelerometer/", "")
 
 # csvファイルを一括で読み込む -------
 ldata <- lapply(files, read_csv, locale = locale(encoding="cp932"), 
-                skip = 3, col_types = cols("時刻" = col_character()))
+                skip = 3, col_types = cols("時刻" = col_character(),
+                                           "活動強度" = col_double()))
 #エラーになる場合は，「locale = locale(encoding="cp932"), 」を削除
 
 # ファイル名から日付とIDを取得 -------
@@ -22,7 +23,7 @@ for(i in 1:length(file_name)) {
 
 
 # リストの各要素を1つのデータフレームに統合 -------
-alldata <- do.call(rbind, ldata)
+alldata <- do.call(bind_rows, ldata)
 alldata
 
 
@@ -32,6 +33,7 @@ alldata <- alldata %>%
   unite(year_month_date, hour_min_sec, col = "time",  
         sep = " ", remove = FALSE) %>%  
   mutate(time = ymd_hms(time, tz =  "Asia/Tokyo"), 
+         month = month(time),
          day = mday(time),
          hour = hour(time),
          id = factor(id),

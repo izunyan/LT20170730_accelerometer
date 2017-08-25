@@ -1,0 +1,24 @@
+---
+title: "NEWS"
+author: "izunyan"
+date: "2017年8月26日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 20170826
+*****
+
+* データセットを新たに2つ追加
+     + test201710SECMETS_20170730.csv
+     + test201710SECMETS_20170813.csv
+
+* csvファイルを一括で読み込む際に，午前0時台で"活動強度"=0が続く場合，整数として読み込まれてしまうため，`"活動強度" = col_double()`を追加し強制的に数値で読むように修正
+
+* `do.call`を適用する関数を`bind_rows`に変更
+
+* 時間変数を作成する際に，monthも追加。データが増えると，月内の日がかぶってしまう場合があるため月の情報も必要
+ 
