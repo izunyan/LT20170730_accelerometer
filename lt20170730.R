@@ -15,6 +15,11 @@ ldata <- lapply(files, read_csv, locale = locale(encoding="cp932"),
                                            "活動強度" = col_double()))
 #エラーになる場合は，「locale = locale(encoding="cp932"), 」を削除
 
+
+# 同一人物なのでIDを修正
+file_name <- str_replace(file_name, "test2017", "mt001")
+
+
 # ファイル名から日付とIDを取得 -------
 for(i in 1:length(file_name)) {
   ldata[[i]]$year_month_date = str_sub(file_name[i],-8,-1) #日付
@@ -68,7 +73,7 @@ alldata %>% filter(day == 7) %>%
 
 
 # 指定した1日の活動量履歴を視覚化(12月30日　休日・外出) -------
-alldata %>% filter(day == 30) %>% 
+alldata %>% filter(month == 12 & day == 30) %>% 
   ggplot() +
   geom_col(aes(x = time, y = mets, fill = actlv4)) +
   coord_cartesian(xlim = c(ymd_hms("2014-12-30  9:00:00", tz = "Asia/Tokyo"),
